@@ -58,7 +58,7 @@ export function MissionSection() {
 
   return (
     <section className="border-t border-border" aria-label="Missions">
-      <div className="mx-auto max-w-[1400px] px-5 py-24 sm:px-8 sm:py-32">
+      <div className="mx-auto max-w-[1400px] px-5 sm:px-8">
         <div className="grid gap-14 lg:grid-cols-[1fr_1fr] lg:items-center lg:gap-24">
           <div>
             <SectionLabel>Missions</SectionLabel>

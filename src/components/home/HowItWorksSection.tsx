@@ -35,7 +35,7 @@ export const steps = [
 
 export function HowItWorksSection({ heading }: { heading?: string }) {
   return (
-    <section className="relative border-t border-border py-24 sm:py-32">
+    <section className="relative border-t border-border section-y">
       <div className="mx-auto max-w-[1400px] px-5 sm:px-8">
         <Reveal>
           <SectionLabel>How it works</SectionLabel>
