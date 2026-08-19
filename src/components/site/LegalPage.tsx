@@ -14,7 +14,7 @@ export function LegalPage({
   blocks: LegalBlock[];
 }) {
   return (
-    <section className="relative overflow-hidden pb-28 pt-36 sm:pt-44">
+    <section className="relative overflow-hidden section-y-top">
       <div
         aria-hidden="true"
         className="grid-guides pointer-events-none absolute inset-0 opacity-40"
