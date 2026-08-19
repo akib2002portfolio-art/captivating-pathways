@@ -1,11 +1,17 @@
 import { Link } from "@tanstack/react-router";
-import { useState, type ReactNode } from "react";
+import { useMemo, useState, type ReactNode } from "react";
 
 import { ActionButton } from "./ActionButton";
+import { FieldError, fieldClass } from "./Field";
 import { Wordmark } from "./Wordmark";
-
-const field =
-  "w-full rounded-md border border-border bg-card px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:border-signal focus:outline-none";
+import {
+  email as emailRule,
+  maxLength,
+  minLength,
+  required,
+  useFormValidation,
+  type Rule,
+} from "@/lib/use-form-validation";
 
 type Props = {
   mode: "signin" | "signup";
@@ -16,6 +22,17 @@ type Props = {
 
 export function AuthShell({ mode, title, subtitle, aside }: Props) {
   const [submitted, setSubmitted] = useState(false);
+
+  const schema = useMemo(() => {
+    const s: Record<string, Rule[]> = {
+      email: [required("Email"), emailRule, maxLength(255, "Email")],
+      password: [required("Password"), minLength(8, "Password"), maxLength(72, "Password")],
+    };
+    if (mode === "signup") s["name"] = [required("Full name"), maxLength(100, "Full name")];
+    return s;
+  }, [mode]);
+
+  const { errors, blur, clear, validateAll } = useFormValidation(schema);
 
   return (
     <div className="grid min-h-screen lg:grid-cols-[1fr_1.1fr]">
@@ -37,9 +54,12 @@ export function AuthShell({ mode, title, subtitle, aside }: Props) {
           <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{subtitle}</p>
 
           <form
-            className="mt-10 space-y-5"
+            noValidate
+            className="mt-10 space-y-2"
             onSubmit={(e) => {
               e.preventDefault();
+              setSubmitted(false);
+              if (!validateAll(e.currentTarget)) return;
               setSubmitted(true);
             }}
           >
@@ -51,10 +71,15 @@ export function AuthShell({ mode, title, subtitle, aside }: Props) {
                 <input
                   id="name"
                   name="name"
-                  required
-                  className={`${field} mt-3`}
+                  maxLength={100}
+                  aria-invalid={!!errors["name"]}
+                  aria-describedby="name-error"
+                  onChange={() => clear("name")}
+                  onBlur={(e) => blur("name", e.currentTarget.value)}
+                  className={`${fieldClass(!!errors["name"])} mt-3`}
                   placeholder="Ada Lovelace"
                 />
+                <FieldError id="name-error" message={errors["name"]} />
               </div>
             )}
             <div>
@@ -65,10 +90,15 @@ export function AuthShell({ mode, title, subtitle, aside }: Props) {
                 id="email"
                 name="email"
                 type="email"
-                required
-                className={`${field} mt-3`}
+                maxLength={255}
+                aria-invalid={!!errors["email"]}
+                aria-describedby="email-error"
+                onChange={() => clear("email")}
+                onBlur={(e) => blur("email", e.currentTarget.value)}
+                className={`${fieldClass(!!errors["email"])} mt-3`}
                 placeholder="you@university.edu"
               />
+              <FieldError id="email-error" message={errors["email"]} />
             </div>
             <div>
               <label htmlFor="password" className="label-mono">
@@ -78,18 +108,22 @@ export function AuthShell({ mode, title, subtitle, aside }: Props) {
                 id="password"
                 name="password"
                 type="password"
-                required
-                minLength={8}
-                className={`${field} mt-3`}
+                maxLength={72}
+                aria-invalid={!!errors["password"]}
+                aria-describedby="password-error"
+                onChange={() => clear("password")}
+                onBlur={(e) => blur("password", e.currentTarget.value)}
+                className={`${fieldClass(!!errors["password"])} mt-3`}
                 placeholder="At least 8 characters"
               />
+              <FieldError id="password-error" message={errors["password"]} />
             </div>
 
-            <ActionButton type="submit" size="lg" className="w-full">
+            <ActionButton type="submit" size="lg" className="mt-4 w-full">
               {mode === "signup" ? "Create account" : "Sign in"}
             </ActionButton>
 
-            <p aria-live="polite" className="min-h-5 text-xs text-signal">
+            <p aria-live="polite" className="min-h-5 pt-2 text-xs text-signal">
               {submitted
                 ? "Accounts open when the beta does — you're on the list for the next intake."
                 : ""}
