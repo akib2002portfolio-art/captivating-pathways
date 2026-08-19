@@ -199,3 +199,29 @@
     transform-origin: left;
   }
 }
+
+/*
+ * Vertical rhythm: ONE inter-section gap for the whole site.
+ * Every section uses `section-y` (half the gap on each edge) so adjacent
+ * sections always sum to the same distance instead of compounding
+ * different ad-hoc paddings.
+ */
+@utility section-y {
+  padding-block: clamp(2.75rem, 4.4vw, 4.5rem);
+}
+
+/* First-in-page sections that sit under the fixed nav. */
+@utility section-y-top {
+  padding-top: clamp(8rem, 12vw, 11rem);
+  padding-bottom: clamp(2.75rem, 4.4vw, 4.5rem);
+}
+
+@utility grain {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.06;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/></filter><rect width='160' height='160' filter='url(%23n)'/></svg>");
+  background-size: 160px 160px;
+}
