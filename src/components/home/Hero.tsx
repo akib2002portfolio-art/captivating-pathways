@@ -8,11 +8,12 @@ export function Hero() {
   const reduced = useReducedMotion();
   const px = useMotionValue(0);
   const py = useMotionValue(0);
-  const sx = useSpring(px, { stiffness: 60, damping: 20, mass: 0.6 });
-  const sy = useSpring(py, { stiffness: 60, damping: 20, mass: 0.6 });
+  // Heavier damping / mass so the parallax feels viscous rather than snappy.
+  const sx = useSpring(px, { stiffness: 34, damping: 42, mass: 1.4 });
+  const sy = useSpring(py, { stiffness: 34, damping: 42, mass: 1.4 });
 
-  const mapX = useTransform(sx, [-1, 1], [22, -22]);
-  const mapY = useTransform(sy, [-1, 1], [16, -16]);
+  const mapX = useTransform(sx, [-1, 1], [34, -34]);
+  const mapY = useTransform(sy, [-1, 1], [26, -26]);
   const gridX = useTransform(sx, [-1, 1], [-8, 8]);
 
   useEffect(() => {
@@ -27,11 +28,14 @@ export function Hero() {
 
   return (
     <section className="relative flex min-h-[100svh] flex-col justify-end overflow-hidden pb-14 pt-32 sm:pb-20">
+      <span aria-hidden="true" className="grain z-[1]" />
+
       <motion.div
         aria-hidden="true"
         style={{ x: gridX }}
         className="grid-guides pointer-events-none absolute inset-y-0 left-0 right-0 opacity-60"
       />
+
 
       <motion.div
         aria-hidden="true"
