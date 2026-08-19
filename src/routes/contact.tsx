@@ -76,7 +76,13 @@ function ContactPage() {
                 <label htmlFor="name" className="label-mono">
                   Name
                 </label>
-                <input id="name" name="name" required className={`${field} mt-3`} placeholder="Your name" />
+                <input
+                  id="name"
+                  name="name"
+                  required
+                  className={`${field} mt-3`}
+                  placeholder="Your name"
+                />
               </div>
               <div>
                 <label htmlFor="email" className="label-mono">
@@ -110,10 +116,7 @@ function ContactPage() {
               Send message
             </ActionButton>
 
-            <p
-              aria-live="polite"
-              className="mt-4 min-h-5 text-xs text-signal"
-            >
+            <p aria-live="polite" className="mt-4 min-h-5 text-xs text-signal">
               {sent ? "Thanks — your message is queued. We'll be in touch." : ""}
             </p>
           </form>

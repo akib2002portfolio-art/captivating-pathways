@@ -11,8 +11,7 @@ export const actionVariants = cva(
       variant: {
         signal:
           "bg-signal text-primary-foreground hover:brightness-110 hover:-translate-y-0.5 shadow-[0_10px_30px_-16px_var(--signal)]",
-        outline:
-          "border border-border text-foreground hover:border-signal hover:text-signal",
+        outline: "border border-border text-foreground hover:border-signal hover:text-signal",
         ghost: "text-muted-foreground hover:text-foreground",
         paper: "bg-paper text-ink hover:brightness-95",
       },

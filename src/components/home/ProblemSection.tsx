@@ -115,8 +115,7 @@ export function ProblemSection() {
             CareerOS <span className="text-signal">connects the pieces.</span>
           </p>
           <p className="mx-auto mt-4 max-w-md text-sm text-muted-foreground">
-            One system that reads your effort as a single trajectory instead of nine unrelated
-            tabs.
+            One system that reads your effort as a single trajectory instead of nine unrelated tabs.
           </p>
         </motion.div>
       </div>

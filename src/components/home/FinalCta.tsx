@@ -21,8 +21,8 @@ export function FinalCta() {
 
         <Reveal delay={0.15}>
           <p className="mx-auto mt-8 max-w-[48ch] text-base leading-relaxed text-muted-foreground sm:text-lg">
-            CareerOS is in student beta. Set your direction, run your first mission, and leave
-            with evidence instead of intentions.
+            CareerOS is in student beta. Set your direction, run your first mission, and leave with
+            evidence instead of intentions.
           </p>
         </Reveal>
 

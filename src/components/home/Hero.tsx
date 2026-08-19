@@ -83,8 +83,7 @@ export function Hero() {
           className="mt-10 flex flex-col gap-8 border-t border-border pt-8 lg:flex-row lg:items-end lg:justify-between"
         >
           <p className="max-w-md text-base leading-relaxed text-muted-foreground sm:text-lg">
-            CareerOS turns your goals, skills and experience into a clear path of meaningful
-            action.
+            CareerOS turns your goals, skills and experience into a clear path of meaningful action.
           </p>
 
           <div className="flex flex-col gap-3 sm:flex-row">

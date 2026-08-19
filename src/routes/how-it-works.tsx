@@ -56,8 +56,8 @@ function HowItWorksPage() {
           </h1>
           <Reveal delay={0.15}>
             <p className="mt-8 max-w-[52ch] text-base leading-relaxed text-muted-foreground sm:text-lg">
-              CareerOS is a loop, not a course. You set a target, the system names the distance,
-              and each pass through the loop shortens it while leaving proof behind.
+              CareerOS is a loop, not a course. You set a target, the system names the distance, and
+              each pass through the loop shortens it while leaving proof behind.
             </p>
           </Reveal>
         </div>

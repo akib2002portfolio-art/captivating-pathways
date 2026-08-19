@@ -59,11 +59,7 @@ export function RevealWords({
     >
       {words.map((word, i) => (
         <span key={`${word}-${i}`} className="inline-block overflow-hidden align-bottom">
-          <motion.span
-            className="inline-block"
-            custom={i + delay * 20}
-            variants={wordVariants}
-          >
+          <motion.span className="inline-block" custom={i + delay * 20} variants={wordVariants}>
             {word}
             {i < words.length - 1 ? "\u00A0" : ""}
           </motion.span>

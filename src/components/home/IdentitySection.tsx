@@ -40,8 +40,8 @@ export function IdentitySection() {
           <Reveal delay={0.1} className="lg:pt-4">
             <p className="max-w-[46ch] text-base leading-relaxed text-muted-foreground sm:text-lg">
               Most students describe themselves in whatever words the last application form
-              demanded. CareerOS keeps one structured picture of you that grows as you do —
-              and every part of it points at something you can show.
+              demanded. CareerOS keeps one structured picture of you that grows as you do — and
+              every part of it points at something you can show.
             </p>
           </Reveal>
         </div>

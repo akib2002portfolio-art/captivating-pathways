@@ -94,9 +94,9 @@ function AboutPage() {
           <Reveal delay={0.1}>
             <p className="max-w-[50ch] text-base leading-relaxed text-muted-foreground">
               CareerOS is in an early student beta, built in the open with the people it's for.
-              Career tracks, mission libraries and the evidence model are being shaped by real
-              usage rather than assumptions — if you're a student, graduate or educator, we want
-              your input in that process.
+              Career tracks, mission libraries and the evidence model are being shaped by real usage
+              rather than assumptions — if you're a student, graduate or educator, we want your
+              input in that process.
             </p>
           </Reveal>
         </div>

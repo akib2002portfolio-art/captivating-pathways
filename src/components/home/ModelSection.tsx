@@ -51,9 +51,7 @@ export function ModelSection() {
         }
       >
         <SectionLabel>The model</SectionLabel>
-        <h2 className="display-lg mt-6 max-w-[14ch]">
-          One loop, repeated until you're ready.
-        </h2>
+        <h2 className="display-lg mt-6 max-w-[14ch]">One loop, repeated until you're ready.</h2>
 
         <div className="relative mt-14 grid gap-10 lg:grid-cols-[1fr_1.1fr]">
           {/* spine */}

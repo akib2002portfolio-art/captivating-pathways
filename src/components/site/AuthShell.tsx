@@ -52,7 +52,13 @@ export function AuthShell({ mode, title, subtitle, aside }: Props) {
                 <label htmlFor="name" className="label-mono">
                   Full name
                 </label>
-                <input id="name" name="name" required className={`${field} mt-3`} placeholder="Ada Lovelace" />
+                <input
+                  id="name"
+                  name="name"
+                  required
+                  className={`${field} mt-3`}
+                  placeholder="Ada Lovelace"
+                />
               </div>
             )}
             <div>
