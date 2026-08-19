@@ -31,9 +31,7 @@ export function AuthShell({ mode, title, subtitle, aside }: Props) {
 
       <main className="flex items-center justify-center px-5 py-20 sm:px-8">
         <div className="w-full max-w-md">
-          <Link to="/" className="lg:hidden">
-            <Wordmark />
-          </Link>
+          <Wordmark className="lg:hidden" />
 
           <h1 className="display-lg mt-10 lg:mt-0">{title}</h1>
           <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{subtitle}</p>
