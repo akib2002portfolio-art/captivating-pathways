@@ -7,7 +7,7 @@ export function fieldClass(hasError?: boolean) {
   return cn(base, hasError ? "border-destructive" : "border-border focus:border-signal");
 }
 
-export function FieldError({ id, message }: { id: string; message?: string }) {
+export function FieldError({ id, message }: { id: string; message?: string | undefined }) {
   return (
     <p
       id={id}
