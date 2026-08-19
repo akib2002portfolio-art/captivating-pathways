@@ -103,8 +103,12 @@ function Stage({
   progress: ReturnType<typeof useScroll>["scrollYProgress"];
   reduced: boolean;
 }) {
+  // Offsets must stay inside [0, 1] and strictly ascending, otherwise the
+  // WAAPI keyframes generated for `opacity` throw for the first stage (start = 0).
   const start = index / total;
-  const active = useTransform(progress, [start - 0.06, start + 0.02], [0.32, 1]);
+  const fadeIn = Math.max(0, Math.min(0.92, start - 0.06));
+  const fadeOut = Math.min(1, fadeIn + 0.08);
+  const active = useTransform(progress, [fadeIn, fadeOut], [0.32, 1]);
 
   return (
     <motion.li className="relative" style={reduced ? {} : { opacity: active }}>
