@@ -24,9 +24,7 @@ export function AuthShell({ mode, title, subtitle, aside }: Props) {
           aria-hidden="true"
           className="grid-guides pointer-events-none absolute inset-0 opacity-50"
         />
-        <Link to="/" className="relative">
-          <Wordmark />
-        </Link>
+        <Wordmark className="relative" />
         <div className="relative max-w-[34ch]">{aside}</div>
         <p className="label-mono relative">Student beta · CareerOS</p>
       </aside>
