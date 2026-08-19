@@ -31,7 +31,16 @@ const columns = [
 export function Footer() {
   return (
     <footer className="border-t border-border">
-      <div className="mx-auto grid max-w-[1400px] gap-12 px-5 py-16 sm:px-8 lg:grid-cols-[1.4fr_2fr]">
+      {/* Closing visual moment: oversized outlined wordmark as a full stop. */}
+      <div className="relative overflow-hidden">
+        <div className="mx-auto max-w-[1400px] px-5 pb-4 pt-16 sm:px-8 sm:pt-24">
+          <p aria-hidden="true" className="wordmark-outline select-none">
+            CareerOS
+          </p>
+        </div>
+      </div>
+
+      <div className="mx-auto grid max-w-[1400px] gap-12 border-t border-border px-5 py-16 sm:px-8 lg:grid-cols-[1.4fr_2fr]">
         <div className="max-w-sm">
           <Wordmark />
           <p className="mt-5 text-sm leading-relaxed text-muted-foreground">

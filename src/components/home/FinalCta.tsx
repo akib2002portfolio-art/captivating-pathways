@@ -3,7 +3,7 @@ import { Reveal, RevealWords, SectionLabel } from "../site/Reveal";
 
 export function FinalCta() {
   return (
-    <section className="relative overflow-hidden border-t border-border py-28 sm:py-40">
+    <section className="relative overflow-hidden border-t border-border section-y">
       <div
         aria-hidden="true"
         className="grid-guides pointer-events-none absolute inset-0 opacity-50"

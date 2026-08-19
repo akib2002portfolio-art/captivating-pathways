@@ -1,8 +1,16 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 import { ActionButton } from "@/components/site/ActionButton";
+import { FieldError, fieldClass } from "@/components/site/Field";
 import { Reveal, RevealWords, SectionLabel } from "@/components/site/Reveal";
+import {
+  email as emailRule,
+  maxLength,
+  required,
+  useFormValidation,
+  type Rule,
+} from "@/lib/use-form-validation";
 
 const title = "Contact CareerOS — talk to the team";
 const description =
@@ -23,14 +31,22 @@ export const Route = createFileRoute("/contact")({
   component: ContactPage,
 });
 
-const field =
-  "w-full rounded-md border border-border bg-card px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:border-signal focus:outline-none";
-
 function ContactPage() {
   const [sent, setSent] = useState(false);
 
+  const schema = useMemo<Record<string, Rule[]>>(
+    () => ({
+      name: [required("Name"), maxLength(100, "Name")],
+      email: [required("Email"), emailRule, maxLength(255, "Email")],
+      message: [required("Message"), maxLength(1000, "Message")],
+    }),
+    [],
+  );
+
+  const { errors, blur, clear, validateAll } = useFormValidation(schema);
+
   return (
-    <section className="relative overflow-hidden pb-28 pt-36 sm:pt-44">
+    <section className="section-y-top relative overflow-hidden">
       <div
         aria-hidden="true"
         className="grid-guides pointer-events-none absolute inset-0 opacity-50"
@@ -65,13 +81,16 @@ function ContactPage() {
 
         <Reveal delay={0.1}>
           <form
+            noValidate
             className="surface rounded-xl p-8 sm:p-10"
             onSubmit={(e) => {
               e.preventDefault();
+              setSent(false);
+              if (!validateAll(e.currentTarget)) return;
               setSent(true);
             }}
           >
-            <div className="space-y-5">
+            <div className="space-y-2">
               <div>
                 <label htmlFor="name" className="label-mono">
                   Name
@@ -79,10 +98,15 @@ function ContactPage() {
                 <input
                   id="name"
                   name="name"
-                  required
-                  className={`${field} mt-3`}
+                  maxLength={100}
+                  aria-invalid={!!errors["name"]}
+                  aria-describedby="name-error"
+                  onChange={() => clear("name")}
+                  onBlur={(e) => blur("name", e.currentTarget.value)}
+                  className={`${fieldClass(!!errors["name"])} mt-3`}
                   placeholder="Your name"
                 />
+                <FieldError id="name-error" message={errors["name"]} />
               </div>
               <div>
                 <label htmlFor="email" className="label-mono">
@@ -92,10 +116,15 @@ function ContactPage() {
                   id="email"
                   name="email"
                   type="email"
-                  required
-                  className={`${field} mt-3`}
+                  maxLength={255}
+                  aria-invalid={!!errors["email"]}
+                  aria-describedby="email-error"
+                  onChange={() => clear("email")}
+                  onBlur={(e) => blur("email", e.currentTarget.value)}
+                  className={`${fieldClass(!!errors["email"])} mt-3`}
                   placeholder="you@university.edu"
                 />
+                <FieldError id="email-error" message={errors["email"]} />
               </div>
               <div>
                 <label htmlFor="message" className="label-mono">
@@ -105,14 +134,19 @@ function ContactPage() {
                   id="message"
                   name="message"
                   rows={5}
-                  required
-                  className={`${field} mt-3 resize-none`}
+                  maxLength={1000}
+                  aria-invalid={!!errors["message"]}
+                  aria-describedby="message-error"
+                  onChange={() => clear("message")}
+                  onBlur={(e) => blur("message", e.currentTarget.value)}
+                  className={`${fieldClass(!!errors["message"])} mt-3 resize-none`}
                   placeholder="What's on your mind?"
                 />
+                <FieldError id="message-error" message={errors["message"]} />
               </div>
             </div>
 
-            <ActionButton type="submit" size="lg" className="mt-8 w-full">
+            <ActionButton type="submit" size="lg" className="mt-6 w-full">
               Send message
             </ActionButton>
 

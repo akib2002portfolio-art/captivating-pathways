@@ -1,55 +1,70 @@
 import { motion, useReducedMotion, useScroll, useTransform, type MotionValue } from "motion/react";
 import { useRef } from "react";
 
-const pieces = [
-  { label: "Courses", from: { x: -34, y: -30, r: -9 } },
-  { label: "Projects", from: { x: 26, y: -36, r: 7 } },
-  { label: "GitHub", from: { x: -14, y: 22, r: 5 } },
-  { label: "LeetCode", from: { x: 34, y: 8, r: -6 } },
-  { label: "CV", from: { x: -38, y: 6, r: 11 } },
-  { label: "LinkedIn", from: { x: 12, y: 34, r: -10 } },
-  { label: "Applications", from: { x: -24, y: -6, r: 4 } },
-  { label: "Certifications", from: { x: 38, y: -12, r: -4 } },
-  { label: "Skills", from: { x: 0, y: -20, r: 8 } },
+/**
+ * Badge choreography rules:
+ * - The headline occupies a reserved centre band (vertical 32%-68% of the sticky
+ *   viewport). No badge start position, and no point along a badge's motion path,
+ *   may enter that band while the headline is visible.
+ * - Start positions therefore live in two horizontal lanes: a top lane (6%-24%)
+ *   and a bottom lane (72%-90%). Both are outside the reserved band at every
+ *   breakpoint because they are expressed as percentages of the viewport.
+ * - Convergence into the centre grid only begins at scroll progress 0.42, by
+ *   which point the headline has fully faded out (it fades 0 -> 0.34).
+ */
+const SAFE_BAND = { top: 32, bottom: 68 };
+
+const CONVERGE_START = 0.42;
+const CONVERGE_END = 0.76;
+
+type Piece = { label: string; x: number; y: number; r: number };
+
+const pieces: Piece[] = [
+  // top lane
+  { label: "Courses", x: 10, y: 9, r: -7 },
+  { label: "Projects", x: 38, y: 16, r: 5 },
+  { label: "GitHub", x: 66, y: 8, r: -4 },
+  { label: "LeetCode", x: 88, y: 20, r: 8 },
+  { label: "Skills", x: 24, y: 23, r: 4 },
+  // bottom lane
+  { label: "CV", x: 12, y: 78, r: 9 },
+  { label: "LinkedIn", x: 42, y: 88, r: -6 },
+  { label: "Applications", x: 70, y: 75, r: 6 },
+  { label: "Certifications", x: 90, y: 86, r: -9 },
 ];
 
-function Piece({
-  label,
-  from,
+function Badge({
+  piece,
   index,
   progress,
 }: {
-  label: string;
-  from: { x: number; y: number; r: number };
+  piece: Piece;
   index: number;
   progress: MotionValue<number>;
 }) {
   const column = index % 3;
   const row = Math.floor(index / 3);
-  const targetX = (column - 1) * 30;
-  const targetY = (row - 1) * 16;
+  // Centre grid target, kept inside the middle of the viewport.
+  const targetX = 50 + (column - 1) * 24;
+  const targetY = 50 + (row - 1) * 9;
 
-  const x = useTransform(progress, [0.05, 0.62], [from.x, targetX]);
-  const y = useTransform(progress, [0.05, 0.62], [from.y, targetY]);
-  const rotate = useTransform(progress, [0.05, 0.62], [from.r, 0]);
-  const borderOpacity = useTransform(progress, [0.5, 0.8], [0.35, 1]);
+  const x = useTransform(progress, [CONVERGE_START, CONVERGE_END], [piece.x, targetX]);
+  const y = useTransform(progress, [CONVERGE_START, CONVERGE_END], [piece.y, targetY]);
+  const rotate = useTransform(progress, [CONVERGE_START, CONVERGE_END], [piece.r, 0]);
+  const opacity = useTransform(progress, [0, 0.06, 0.86, 0.96], [0, 1, 1, 0]);
+
+  const left = useTransform(x, (v) => `${v}%`);
+  const top = useTransform(y, (v) => `${v}%`);
 
   return (
     <motion.div
-      className="absolute left-1/2 top-1/2"
-      style={{
-        x: useTransform(x, (v) => `calc(-50% + ${v}vw)`),
-        y: useTransform(y, (v) => `calc(-50% + ${v}vh)`),
-        rotate,
-      }}
+      className="absolute -translate-x-1/2 -translate-y-1/2"
+      style={{ left, top, rotate, opacity }}
     >
-      <motion.span
-        style={{ opacity: borderOpacity }}
-        className="surface inline-flex items-center gap-2 whitespace-nowrap rounded-md px-3 py-2 text-xs sm:px-4 sm:text-sm"
-      >
+      <span className="surface inline-flex items-center gap-2 whitespace-nowrap rounded-md px-2.5 py-1.5 text-[11px] sm:px-4 sm:py-2 sm:text-sm">
         <span className="h-1.5 w-1.5 rounded-full bg-signal" aria-hidden="true" />
-        {label}
-      </motion.span>
+        {piece.label}
+      </span>
     </motion.div>
   );
 }
@@ -59,14 +74,14 @@ export function ProblemSection() {
   const reduced = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
 
-  const headlineOpacity = useTransform(scrollYProgress, [0, 0.18, 0.4], [1, 1, 0]);
-  const resolveOpacity = useTransform(scrollYProgress, [0.62, 0.8], [0, 1]);
-  const resolveY = useTransform(scrollYProgress, [0.62, 0.85], [24, 0]);
-  const lineScale = useTransform(scrollYProgress, [0.45, 0.85], [0, 1]);
+  const headlineOpacity = useTransform(scrollYProgress, [0, 0.16, 0.34], [1, 1, 0]);
+  const resolveOpacity = useTransform(scrollYProgress, [0.76, 0.9], [0, 1]);
+  const resolveY = useTransform(scrollYProgress, [0.76, 0.94], [24, 0]);
+  const lineScale = useTransform(scrollYProgress, [0.7, 0.94], [0, 1]);
 
   if (reduced) {
     return (
-      <section className="mx-auto max-w-[1400px] px-5 py-28 sm:px-8">
+      <section className="section-y mx-auto max-w-[1400px] px-5 sm:px-8">
         <h2 className="display-lg max-w-[18ch]">
           You are doing a lot. But are you moving forward?
         </h2>
@@ -77,34 +92,41 @@ export function ProblemSection() {
             </li>
           ))}
         </ul>
-        <p className="mt-10 display-md text-signal">CareerOS connects the pieces.</p>
+        <p className="display-md mt-10 text-signal">CareerOS connects the pieces.</p>
       </section>
     );
   }
 
   return (
     <section ref={ref} className="relative h-[320vh]" aria-label="The career problem">
-      <div className="sticky top-0 flex h-[100svh] items-center overflow-hidden">
+      <div className="sticky top-0 h-[100svh] overflow-hidden">
         <div className="pointer-events-none absolute inset-0">
           {pieces.map((p, i) => (
-            <Piece key={p.label} {...p} index={i} progress={scrollYProgress} />
+            <Badge key={p.label} piece={p} index={i} progress={scrollYProgress} />
           ))}
         </div>
 
+        {/* Reserved headline box — badges never start or pass through here while visible. */}
         <motion.div
-          style={{ opacity: headlineOpacity }}
-          className="relative mx-auto w-full max-w-[1400px] px-5 sm:px-8"
+          style={{
+            opacity: headlineOpacity,
+            top: `${SAFE_BAND.top}%`,
+            height: `${SAFE_BAND.bottom - SAFE_BAND.top}%`,
+          }}
+          className="absolute inset-x-0 flex items-center"
         >
-          <h2 className="display-lg max-w-[16ch]">
-            You are doing a lot.
-            <br />
-            <span className="text-muted-foreground">But are you moving forward?</span>
-          </h2>
+          <div className="mx-auto w-full max-w-[1400px] px-5 sm:px-8">
+            <h2 className="display-lg max-w-[16ch]">
+              You are doing a lot.
+              <br />
+              <span className="text-muted-foreground">But are you moving forward?</span>
+            </h2>
+          </div>
         </motion.div>
 
         <motion.div
           style={{ opacity: resolveOpacity, y: resolveY }}
-          className="pointer-events-none absolute inset-x-0 bottom-14 mx-auto max-w-[1400px] px-5 text-center sm:px-8"
+          className="pointer-events-none absolute inset-x-0 bottom-10 mx-auto max-w-[1400px] px-5 text-center sm:bottom-14 sm:px-8"
         >
           <motion.span
             style={{ scaleX: lineScale }}

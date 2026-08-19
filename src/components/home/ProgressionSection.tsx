@@ -41,7 +41,7 @@ export function ProgressionSection() {
   const height = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
 
   return (
-    <section className="relative border-t border-border py-24 sm:py-32">
+    <section className="relative border-t border-border section-y">
       <div className="mx-auto max-w-[1400px] px-5 sm:px-8">
         <Reveal>
           <SectionLabel>Career progression</SectionLabel>

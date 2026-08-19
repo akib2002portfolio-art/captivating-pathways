@@ -46,8 +46,8 @@ export function ModelSection() {
       <div
         className={
           reduced
-            ? "mx-auto max-w-[1400px] px-5 py-24 sm:px-8"
-            : "sticky top-0 mx-auto flex min-h-[100svh] max-w-[1400px] flex-col justify-center px-5 py-24 sm:px-8"
+            ? "section-y mx-auto max-w-[1400px] px-5 sm:px-8"
+            : "sticky top-0 mx-auto flex min-h-[100svh] max-w-[1400px] flex-col justify-center px-5 sm:px-8"
         }
       >
         <SectionLabel>The model</SectionLabel>

@@ -17,7 +17,7 @@ const rows = [
 export function ProductDemo() {
   return (
     <section className="border-t border-border" aria-label="Product demonstration">
-      <div className="mx-auto max-w-[1400px] px-5 py-24 sm:px-8 sm:py-32">
+      <div className="section-y mx-auto max-w-[1400px] px-5 sm:px-8">
         <div className="grid gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:gap-20">
           <div className="lg:sticky lg:top-28 lg:self-start">
             <SectionLabel>Inside the product</SectionLabel>

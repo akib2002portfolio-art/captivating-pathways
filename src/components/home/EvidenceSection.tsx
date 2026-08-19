@@ -24,7 +24,7 @@ export function EvidenceSection() {
 
   return (
     <section className="border-t border-border" aria-label="Evidence">
-      <div ref={ref} className="mx-auto max-w-[1400px] px-5 py-24 sm:px-8 sm:py-32">
+      <div ref={ref} className="section-y mx-auto max-w-[1400px] px-5 sm:px-8">
         <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-center lg:gap-20">
           <div>
             <SectionLabel>Evidence</SectionLabel>

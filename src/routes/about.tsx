@@ -43,7 +43,7 @@ const beliefs = [
 function AboutPage() {
   return (
     <>
-      <section className="relative overflow-hidden pb-16 pt-36 sm:pb-24 sm:pt-44">
+      <section className="relative overflow-hidden section-y-top">
         <div
           aria-hidden="true"
           className="grid-guides pointer-events-none absolute inset-0 opacity-50"
@@ -65,7 +65,7 @@ function AboutPage() {
         </div>
       </section>
 
-      <section className="border-t border-border py-24 sm:py-32">
+      <section className="border-t border-border section-y">
         <div className="mx-auto max-w-[1400px] px-5 sm:px-8">
           <Reveal>
             <SectionLabel>What we believe</SectionLabel>
@@ -86,7 +86,7 @@ function AboutPage() {
         </div>
       </section>
 
-      <section className="border-t border-border py-24 sm:py-32">
+      <section className="border-t border-border section-y">
         <div className="mx-auto grid max-w-[1400px] gap-12 px-5 sm:px-8 lg:grid-cols-[1fr_1fr]">
           <Reveal>
             <h2 className="display-lg max-w-[16ch]">Where we are now</h2>
